@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import "./Todo.css";
 import { FaClipboardCheck } from "react-icons/fa6";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -35,6 +34,14 @@ const Todo = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleDeleteTodo = (value) => {
+    const updatedTask = task.filter((curTask) => curTask !== value);
+    setTask(updatedTask);
+  };
+
+  const handleClearTodoData = () => {
+     setTask([]);
+  };
   return (
     <>
       <section className="flex flex-col items-center min-h-screen pt-12 bg-gradient-to-r from-[#001214] to-[#001f29] text-[#f0f0f0] transition duration-300 ease-linear">
@@ -82,16 +89,27 @@ const Todo = () => {
                   className="bg-[#f2f3f4] text-gray-800 p-6 rounded-2xl w-full max-w-lg grid grid-cols-[1fr_0.2fr_0.2fr] items-center gap-4"
                 >
                   <span className="truncate">{curTask}</span>
-                  <button className="bg-green-500 text-white p-2 rounded-full hover:shadow-lg">
+                  <button className="bg-green-700 text-white py-2 px-6 rounded-full hover:shadow-lg ">
                     <FaClipboardCheck />
                   </button>
-                  <button className="bg-red-500 text-white p-2 rounded-full hover:shadow-lg">
+                  <button
+                    className="bg-red-600 text-white py-2 px-6 rounded-full hover:shadow-lg"
+                    onClick={() => handleDeleteTodo(curTask)}
+                  >
                     <MdDeleteForever />
                   </button>
                 </li>
               );
             })}
           </ul>
+        </section>
+        <section className="flex justify-center mt-6">
+          <button
+            className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+            onClick={handleClearTodoData}
+          >
+            Clear all
+          </button>
         </section>
       </section>
     </>
