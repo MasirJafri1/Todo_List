@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import "./Todo.css";
 import { FaClipboardCheck } from "react-icons/fa6";
 import { MdDeleteForever } from "react-icons/md";
 
-
 const Todo = () => {
   const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
+  const [dateTime, setDateTime] = useState("");
 
   const handleInputChange = (value) => {
     setInputValue(value);
@@ -24,6 +24,17 @@ const Todo = () => {
     setInputValue("");
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString();
+      const formattedTime = now.toLocaleTimeString();
+      setDateTime(`${formattedDate} - ${formattedTime}`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <section className="flex flex-col items-center min-h-screen pt-12 bg-gradient-to-r from-[#001214] to-[#001f29] text-[#f0f0f0] transition duration-300 ease-linear">
@@ -34,7 +45,11 @@ const Todo = () => {
           <p className="text-lg text-gray-200 italic text-center max-w-md px-4">
             Keep track of your tasks and stay organized effortlessly!
           </p>
+          <h2 className="text-2xl text-blue-400 font-semibold text-center shadow-md bg-gray-800 rounded-lg p-2 mt-4 transition duration-300 hover:bg-gray-700">
+            {dateTime}
+          </h2>
         </header>
+
         <section className="w-full flex justify-center">
           <form
             className="w-full max-w-md flex mb-4"
