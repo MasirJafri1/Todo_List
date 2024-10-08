@@ -4,7 +4,6 @@
 
 The Todo App is a modern and responsive application built with React that allows users to manage their tasks efficiently. With a clean and intuitive interface, users can easily add, check off, and delete tasks. This app is designed to enhance productivity while providing a visually appealing experience.
 
-![Todo App Screenshot](path/to/screenshot.png) <!-- Replace with an actual screenshot -->
 
 ## Features
 
