@@ -7,20 +7,37 @@ const Todo = () => {
   const [task, setTask] = useState([]);
 
   const handleFormSubmit = (inputValue) => {
-    if (!inputValue) return;
+    const { id, content, checked } = inputValue;
+    if (!content) return;
+    // if (task.includes()) return;
+    const ifTodocontentMatched = task.find(
+      (curTask) => curTask.content === content
+    );
+    if (ifTodocontentMatched) return;
 
-    if (task.includes()) return;
-
-    setTask((prev) => [...prev, inputValue]);
+    // setTask((prev) => [...prev, inputValue]);
+    setTask((prev) => [...prev, { id, content, checked }]);
   };
 
   const handleDeleteTodo = (value) => {
-    const updatedTask = task.filter((curTask) => curTask !== value);
+    const updatedTask = task.filter((curTask) => curTask.content !== value);
     setTask(updatedTask);
   };
 
   const handleClearTodoData = () => {
     setTask([]);
+  };
+
+  const handleCheckedTodo = (content) => {
+    const updatedTask = task.map((curTask) => {
+      if (curTask.content === content) {
+        // Toggle the checked state
+        return { ...curTask, checked: !curTask.checked };
+      } else {
+        return curTask;
+      }
+    });
+    setTask(updatedTask);
   };
   return (
     <>
@@ -38,12 +55,14 @@ const Todo = () => {
 
         <section className="flex justify-center w-full">
           <ul className="flex flex-col items-center space-y-6 w-full max-w-xl">
-            {task.map((curTask, index) => {
+            {task.map((curTask) => {
               return (
                 <TodoList
-                  key={index}
-                  data={curTask}
+                  key={curTask.id}
+                  data={curTask.content}
+                  checked={curTask.checked}
                   onHandleDeleteTodo={handleDeleteTodo}
+                  onHandleCheckedTodo={handleCheckedTodo}
                 />
               );
             })}
